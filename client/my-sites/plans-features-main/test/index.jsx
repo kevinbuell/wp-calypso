@@ -65,23 +65,12 @@ import {
 	TYPE_PERSONAL,
 	TERM_ANNUALLY,
 	TYPE_PREMIUM,
-} from 'lib/plans/constants';
+} from 'calypso/lib/plans/constants';
 
 const props = {
 	selectedPlan: PLAN_FREE,
 	translate: ( x ) => x,
 };
-
-describe( 'PlansFeaturesMain.renderFreePlanBanner()', () => {
-	test( 'Should return null when called with hideFreePlan props', () => {
-		const instance = new PlansFeaturesMain( {
-			...props,
-			hideFreePlan: true,
-		} );
-		const freePlanBanner = instance.renderFreePlanBanner();
-		expect( freePlanBanner ).toBeNull();
-	} );
-} );
 
 describe( 'PlansFeaturesMain.getPlansForPlanFeatures()', () => {
 	test( 'Should render <PlanFeatures /> with plans matching given planTypes when called with planTypes props', () => {
