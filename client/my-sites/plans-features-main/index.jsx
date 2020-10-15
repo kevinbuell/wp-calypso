@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import AsyncLoad from 'components/async-load';
-import warn from 'lib/warn';
-import PlanFeatures from 'my-sites/plan-features';
+import AsyncLoad from 'calypso/components/async-load';
+import warn from 'calypso/lib/warn';
+import PlanFeatures from 'calypso/my-sites/plan-features';
 import {
 	JETPACK_PLANS,
 	PLAN_JETPACK_PERSONAL,
@@ -29,17 +29,20 @@ import {
 	GROUP_WPCOM,
 	GROUP_JETPACK,
 	PLAN_PERSONAL,
-} from 'lib/plans/constants';
-import { JETPACK_PRODUCTS_LIST, JETPACK_PRODUCT_PRICE_MATRIX } from 'lib/products-values/constants';
-import { getJetpackProducts } from 'lib/products-values/translations';
+} from 'calypso/lib/plans/constants';
+import {
+	JETPACK_PRODUCTS_LIST,
+	JETPACK_PRODUCT_PRICE_MATRIX,
+} from 'calypso/lib/products-values/constants';
+import { getJetpackProducts } from 'calypso/lib/products-values/translations';
 import JetpackFAQ from './jetpack-faq';
 import PlansFeaturesMainProductsHeader from './products-header';
 import WpcomFAQ from './wpcom-faq';
-import CartData from 'components/data/cart';
-import QueryPlans from 'components/data/query-plans';
-import QuerySites from 'components/data/query-sites';
-import QuerySitePlans from 'components/data/query-site-plans';
-import { isEnabled } from 'config';
+import CartData from 'calypso/components/data/cart';
+import QueryPlans from 'calypso/components/data/query-plans';
+import QuerySites from 'calypso/components/data/query-sites';
+import QuerySitePlans from 'calypso/components/data/query-site-plans';
+import { isEnabled } from 'calypso/config';
 import {
 	chooseDefaultCustomerType,
 	findPlansKeys,
@@ -52,27 +55,27 @@ import {
 	isBusinessPlan,
 	isEcommercePlan,
 	planMatches,
-} from 'lib/plans';
-import { isValidFeatureKey } from 'lib/plans/features-list';
+} from 'calypso/lib/plans';
+import { isValidFeatureKey } from 'calypso/lib/plans/features-list';
 import { Button } from '@automattic/components';
-import PaymentMethods from 'blocks/payment-methods';
-import ProductSelector from 'blocks/product-selector';
-import FormattedHeader from 'components/formatted-header';
-import HappychatConnection from 'components/happychat/connection-connected';
-import isHappychatAvailable from 'state/happychat/selectors/is-happychat-available';
-import { getDiscountByName } from 'lib/discounts';
-import { getDomainsBySiteId } from 'state/sites/domains/selectors';
+import PaymentMethods from 'calypso/blocks/payment-methods';
+import ProductSelector from 'calypso/blocks/product-selector';
+import FormattedHeader from 'calypso/components/formatted-header';
+import HappychatConnection from 'calypso/components/happychat/connection-connected';
+import isHappychatAvailable from 'calypso/state/happychat/selectors/is-happychat-available';
+import { getDiscountByName } from 'calypso/lib/discounts';
+import { getDomainsBySiteId } from 'calypso/state/sites/domains/selectors';
 import {
 	getSitePlan,
 	getSiteSlug,
 	isJetpackSite,
 	isJetpackSiteMultiSite,
-} from 'state/sites/selectors';
-import getPreviousRoute from 'state/selectors/get-previous-route';
-import { getTld } from 'lib/domains';
-import { isDiscountActive } from 'state/selectors/get-active-discount.js';
-import { selectSiteId as selectHappychatSiteId } from 'state/help/actions';
-import { getABTestVariation } from 'lib/abtest';
+} from 'calypso/state/sites/selectors';
+import getPreviousRoute from 'calypso/state/selectors/get-previous-route';
+import { getTld } from 'calypso/lib/domains';
+import { isDiscountActive } from 'calypso/state/selectors/get-active-discount.js';
+import { selectSiteId as selectHappychatSiteId } from 'calypso/state/help/actions';
+import { getABTestVariation } from 'calypso/lib/abtest';
 import FreePlanBanner from './free-plan-banner';
 import PlanTypeSelector from './plan-type-selector';
 import ExperimentActivator, { DefaultVariation, Variation } from './experiment-activator';
@@ -397,7 +400,7 @@ export class PlansFeaturesMain extends Component {
 			<div className="plans-features-main__group is-jetpack-products">
 				<PlansFeaturesMainProductsHeader />
 				<AsyncLoad
-					require="blocks/product-plan-overlap-notices"
+					require="calypso/blocks/product-plan-overlap-notices"
 					placeholder={ null }
 					plans={ JETPACK_PLANS }
 					products={ JETPACK_PRODUCTS_LIST }
@@ -429,11 +432,12 @@ export class PlansFeaturesMain extends Component {
 			hideFreePlan,
 			isInSignup,
 			siteId,
+			siteSlug,
 			plansWithScroll,
 			isEligibleForMonthlyPricing,
 		} = this.props;
 		const shouldHideFreePlanBanner = hideFreePlan || ! plansWithScroll;
-		const basePlansPath = isInSignup ? location?.pathname : `/plans/${ siteSlug }`;
+		const basePlansPath = isInSignup ? window.location?.pathname : `/plans/${ siteSlug }`;
 
 		return (
 			<div className="plans-features-main">
@@ -549,7 +553,8 @@ export default connect(
 			'onboarding' === props.flowName &&
 			'reskinned' === getABTestVariation( 'reskinSignupFlow' );
 
-		const isEligibleForMonthlyPricing = props.isInSignup && 'onboarding' === props.flowName;
+		const isEligibleForMonthlyPricing =
+			props.isInSignup && ! props.isJetpack && 'onboarding' === props.flowName;
 
 		return {
 			// This is essentially a hack - discounts are the only endpoint that we can rely on both on /plans and
