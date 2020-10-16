@@ -105,7 +105,7 @@ describe( `[${ host }] Plans: (${ screenSize })`, function () {
 
 		step( 'Select Business Plan', async function () {
 			const plansPage = await PlansPage.Expect( driver );
-			return await plansPage.selectBusinessPlan();
+			return await plansPage.selectPaidPlan();
 		} );
 
 		step( 'Remove any existing coupon', async function () {
@@ -195,7 +195,7 @@ describe( `[${ host }] Plans: (${ screenSize })`, function () {
 			await sidebarComponent.selectPlan();
 			const plansPage = await PlansPage.Expect( driver );
 			await plansPage.openPlansTab();
-			return await plansPage.selectBusinessPlan();
+			return await plansPage.selectPaidPlan();
 		} );
 
 		step( 'User is taken to be Payment Details form', async function () {
