@@ -711,6 +711,7 @@ class CalypsoifyIframe extends Component<
 
 		const isUsingClassicBlock = !! classicBlockEditorId;
 		const isCheckoutOverlayEnabled = config.isEnabled( 'post-editor/checkout-overlay' );
+		const isLaunchOverlayEnabled = config.isEnabled( 'post-editor/launch-overlay' );
 
 		return (
 			<Fragment>
@@ -757,6 +758,7 @@ class CalypsoifyIframe extends Component<
 						isOpen
 					/>
 				) }
+				{ isLaunchOverlayEnabled && <AsyncLoad require="calypso/blocks/editor-launch-modal" /> }
 				<EditorRevisionsDialog loadRevision={ this.loadRevision } />
 				<WebPreview
 					externalUrl={ postUrl }
