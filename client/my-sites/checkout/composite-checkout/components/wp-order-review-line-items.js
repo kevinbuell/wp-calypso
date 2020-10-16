@@ -20,11 +20,11 @@ import { useSelector } from 'react-redux';
 import joinClasses from './join-classes';
 import { useHasDomainsInCart } from '../hooks/has-domains';
 import { ItemVariationPicker } from './item-variation-picker';
-import { isGSuiteProductSlug } from 'lib/gsuite';
-import { planMatches } from 'lib/plans';
-import { GROUP_WPCOM, TERM_ANNUALLY, TERM_BIENNIALLY } from 'lib/plans/constants';
-import { currentUserHasFlag, getCurrentUser } from 'state/current-user/selectors';
-import { NON_PRIMARY_DOMAINS_TO_FREE_USERS } from 'state/current-user/constants';
+import { isGSuiteProductSlug } from 'calypso/lib/gsuite';
+import { planMatches } from 'calypso/lib/plans';
+import { GROUP_WPCOM, TERM_ANNUALLY, TERM_BIENNIALLY } from 'calypso/lib/plans/constants';
+import { currentUserHasFlag, getCurrentUser } from 'calypso/state/current-user/selectors';
+import { NON_PRIMARY_DOMAINS_TO_FREE_USERS } from 'calypso/state/current-user/constants';
 
 export function WPOrderReviewSection( { children, className } ) {
 	return <div className={ joinClasses( [ className, 'order-review-section' ] ) }>{ children }</div>;
@@ -43,6 +43,7 @@ function WPLineItem( {
 	onChangePlanLength,
 	isSummary,
 	createUserAndSiteBeforeTransaction,
+	isMonthlyPricingTest,
 } ) {
 	const translate = useTranslate();
 	const hasDomainsInCart = useHasDomainsInCart();
@@ -82,7 +83,11 @@ function WPLineItem( {
 				{ item.label }
 			</LineItemTitle>
 			<span aria-labelledby={ itemSpanId } className="checkout-line-item__price">
-				<LineItemPrice item={ item } isSummary={ isSummary } />
+				<LineItemPrice
+					item={ item }
+					isSummary={ isSummary }
+					isMonthlyPricingTest={ isMonthlyPricingTest }
+				/>
 			</span>
 			{ item.sublabel && (
 				<>
