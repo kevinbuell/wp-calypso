@@ -4,24 +4,31 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import debugFactory from 'debug';
-import wp from 'lib/wp';
 import { CheckoutErrorBoundary } from '@automattic/composite-checkout';
 import { useTranslate } from 'i18n-calypso';
 
 /**
  * Internal Dependencies
  */
+import wp from 'calypso/lib/wp';
 import CheckoutContainer from './checkout/checkout-container';
 import PrePurchaseNotices from './checkout/prepurchase-notices';
 import CompositeCheckout from './composite-checkout/composite-checkout';
 import { fetchStripeConfiguration } from './composite-checkout/payment-method-helpers';
-import { StripeHookProvider } from 'lib/stripe';
-import config from 'config';
-import { logToLogstash } from 'state/logstash/actions';
-import Recaptcha from 'signup/recaptcha';
+import { StripeHookProvider } from 'calypso/lib/stripe';
+import config from 'calypso/config';
+import { logToLogstash } from 'calypso/state/logstash/actions';
+import Recaptcha from 'calypso/signup/recaptcha';
+import ShoppingCartProvider from './composite-checkout/hooks/use-shopping-cart-manager/shopping-cart-provider';
+import getCartKey from './get-cart-key';
 
 const debug = debugFactory( 'calypso:checkout-system-decider' );
+
+// Aliasing wpcom functions explicitly bound to wpcom is required here;
+// otherwise we get `this is not defined` errors.
 const wpcom = wp.undocumented();
+const wpcomGetCart = ( ...args ) => wpcom.getCart( ...args );
+const wpcomSetCart = ( ...args ) => wpcom.setCart( ...args );
 
 // Decide if we should use CompositeCheckout or CheckoutContainer
 export default function CheckoutSystemDecider( {
@@ -39,7 +46,6 @@ export default function CheckoutSystemDecider( {
 	redirectTo,
 	upgradeIntent,
 	clearTransaction,
-	cart,
 	isLoggedOutCart,
 	isNoSiteCart,
 } ) {
@@ -83,11 +89,6 @@ export default function CheckoutSystemDecider( {
 		[ reduxDispatch ]
 	);
 
-	if ( ! cart || ! cart.currency ) {
-		debug( 'not deciding yet; cart has not loaded' );
-		return null; // TODO: replace with loading page
-	}
-
 	if ( 'composite-checkout' === checkoutVariant ) {
 		let siteSlug = selectedSite?.slug;
 
@@ -105,24 +106,28 @@ export default function CheckoutSystemDecider( {
 					errorMessage={ translate( 'Sorry, there was an error loading this page.' ) }
 					onError={ logCheckoutError }
 				>
-					<StripeHookProvider fetchStripeConfiguration={ fetchStripeConfigurationWpcom }>
-						<CompositeCheckout
-							siteSlug={ siteSlug }
-							siteId={ selectedSite?.ID }
-							productAliasFromUrl={ productAliasFromUrl }
-							purchaseId={ purchaseId }
-							couponCode={ couponCode }
-							redirectTo={ redirectTo }
-							feature={ selectedFeature }
-							plan={ plan }
-							cart={ cart }
-							isComingFromUpsell={ isComingFromUpsell }
-							infoMessage={ prepurchaseNotices }
-							isLoggedOutCart={ isLoggedOutCart }
-							isNoSiteCart={ isNoSiteCart }
-							getCart={ isLoggedOutCart || isNoSiteCart ? () => Promise.resolve( cart ) : null }
-						/>
-					</StripeHookProvider>
+					<ShoppingCartProvider
+						cartKey={ getCartKey( { selectedSite, isLoggedOutCart, isNoSiteCart } ) }
+						getCart={ wpcomGetCart }
+						setCart={ wpcomSetCart }
+					>
+						<StripeHookProvider fetchStripeConfiguration={ fetchStripeConfigurationWpcom }>
+							<CompositeCheckout
+								siteSlug={ siteSlug }
+								siteId={ selectedSite?.ID }
+								productAliasFromUrl={ productAliasFromUrl }
+								purchaseId={ purchaseId }
+								couponCode={ couponCode }
+								redirectTo={ redirectTo }
+								feature={ selectedFeature }
+								plan={ plan }
+								isComingFromUpsell={ isComingFromUpsell }
+								infoMessage={ prepurchaseNotices }
+								isLoggedOutCart={ isLoggedOutCart }
+								isNoSiteCart={ isNoSiteCart }
+							/>
+						</StripeHookProvider>
+					</ShoppingCartProvider>
 				</CheckoutErrorBoundary>
 				{ isLoggedOutCart && <Recaptcha badgePosition="bottomright" /> }
 			</>
