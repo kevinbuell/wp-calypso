@@ -64,7 +64,7 @@ import {
 } from 'calypso/signup/storageUtils';
 import { useProductVariants } from './hooks/product-variants';
 import { translateResponseCartToWPCOMCart } from './lib/translate-cart';
-import useShoppingCart from './hooks/use-shopping-cart-manager/use-shopping-cart';
+import { useShoppingCart } from 'calypso/lib/shopping-cart';
 import useShowAddCouponSuccessMessage from './hooks/use-show-add-coupon-success-message';
 import useCountryList from './hooks/use-country-list';
 import { colors } from '@automattic/color-studio';

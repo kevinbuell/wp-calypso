@@ -10,7 +10,7 @@ import type {
 	ResponseCart,
 	RequestCartProduct,
 	ReactStandardAction,
-} from './use-shopping-cart-manager/types';
+} from 'calypso/lib/shopping-cart';
 
 export default function useRecordCartLoaded( {
 	recordEvent,

@@ -23,7 +23,7 @@ import { getPlanBySlug, getPlans, isRequestingPlans } from 'calypso/state/plans/
 import { getProductsList, isProductsListFetching } from 'calypso/state/products-list/selectors';
 import getUpgradePlanSlugFromPath from 'calypso/state/selectors/get-upgrade-plan-slug-from-path';
 import { createItemToAddToCart } from '../add-items';
-import { RequestCartProduct } from './use-shopping-cart-manager/types';
+import { RequestCartProduct } from 'calypso/lib/shopping-cart';
 import useFetchProductsIfNotLoaded from './use-fetch-products-if-not-loaded';
 
 const debug = debugFactory( 'calypso:composite-checkout:use-prepare-products-for-cart' );

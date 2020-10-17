@@ -5,7 +5,7 @@ import {
 	ResponseCart,
 	ResponseCartProduct,
 	ResponseCartProductExtra,
-} from 'calypso/my-sites/checkout/composite-checkout/hooks/use-shopping-cart-manager/types';
+} from 'calypso/lib/shopping-cart';
 
 export type CartItemValue = ResponseCartProduct;
 

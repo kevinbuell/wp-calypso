@@ -9,7 +9,7 @@ import { useSelect } from '@automattic/composite-checkout';
  * Internal dependencies
  */
 import { SummaryLine, SummaryDetails } from './summary-details';
-import useShoppingCart from 'calypso/my-sites/checkout/composite-checkout/hooks/use-shopping-cart-manager/use-shopping-cart';
+import { useShoppingCart } from 'calypso/lib/shopping-cart';
 import { hasOnlyRenewalItems } from 'calypso/lib/cart-values/cart-items';
 
 export default function WPContactFormSummary( {

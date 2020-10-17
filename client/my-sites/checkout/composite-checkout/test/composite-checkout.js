@@ -17,7 +17,7 @@ import { render, act, fireEvent } from '@testing-library/react';
  */
 import CompositeCheckout from '../composite-checkout';
 import { StripeHookProvider } from 'calypso/lib/stripe';
-import ShoppingCartProvider from '../hooks/use-shopping-cart-manager/shopping-cart-provider';
+import { ShoppingCartProvider } from 'calypso/lib/shopping-cart';
 
 /**
  * Mocked dependencies

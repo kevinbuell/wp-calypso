@@ -7,10 +7,10 @@ import debugFactory from 'debug';
 /**
  * Internal dependencies
  */
-import type { ReactStandardAction, ResponseCart } from './use-shopping-cart-manager/types';
+import type { ReactStandardAction, ResponseCart } from 'calypso/lib/shopping-cart';
 import type { StoredCard } from '../types/stored-cards';
 import type { CartValue } from 'calypso/lib/cart-values/types';
-import { hasRenewalItem } from 'lib/cart-values/cart-items';
+import { hasRenewalItem } from 'calypso/lib/cart-values/cart-items';
 
 const debug = debugFactory( 'calypso:composite-checkout:use-record-checkout-loaded' );
 

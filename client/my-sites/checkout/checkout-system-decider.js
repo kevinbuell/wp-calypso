@@ -19,7 +19,7 @@ import { StripeHookProvider } from 'calypso/lib/stripe';
 import config from 'calypso/config';
 import { logToLogstash } from 'calypso/state/logstash/actions';
 import Recaptcha from 'calypso/signup/recaptcha';
-import ShoppingCartProvider from './composite-checkout/hooks/use-shopping-cart-manager/shopping-cart-provider';
+import { ShoppingCartProvider } from 'calypso/lib/shopping-cart';
 import getCartKey from './get-cart-key';
 import CartStore from 'calypso/lib/cart/store';
 

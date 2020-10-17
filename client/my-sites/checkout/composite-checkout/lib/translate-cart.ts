@@ -10,7 +10,7 @@ import {
 	ResponseCart,
 	ResponseCartProduct,
 	TempResponseCartProduct,
-} from '../hooks/use-shopping-cart-manager/types';
+} from 'calypso/lib/shopping-cart';
 import {
 	WPCOMCart,
 	WPCOMCartItem,
@@ -23,7 +23,7 @@ import {
 	translateWpcomPaymentMethodToCheckoutPaymentMethod,
 	WPCOMPaymentMethodClass,
 } from '../types/backend/payment-method';
-import { isPlan, isDomainTransferProduct, isDomainProduct } from 'lib/products-values';
+import { isPlan, isDomainTransferProduct, isDomainProduct } from 'calypso/lib/products-values';
 
 /**
  * Translate a cart object as returned by the WPCOM cart endpoint to

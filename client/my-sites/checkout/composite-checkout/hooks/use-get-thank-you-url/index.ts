@@ -12,7 +12,7 @@ import { isEmpty } from 'lodash';
  */
 import { getSelectedSite } from 'calypso/state/ui/selectors';
 import isEligibleForSignupDestination from 'calypso/state/selectors/is-eligible-for-signup-destination';
-import type { ResponseCart } from 'calypso/my-sites/checkout/composite-checkout/hooks/use-shopping-cart-manager/types';
+import type { ResponseCart } from 'calypso/lib/shopping-cart';
 import { TransactionResponse } from 'calypso/my-sites/checkout/composite-checkout/types/wpcom-store-state';
 import getThankYouPageUrl from './get-thank-you-page-url';
 

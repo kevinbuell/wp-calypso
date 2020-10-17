@@ -9,7 +9,7 @@ import {
 	addItemsToResponseCart,
 	addLocationToResponseCart,
 	doesCartLocationDifferFromResponseCartLocation,
-} from '../hooks/use-shopping-cart-manager/cart-functions';
+} from 'calypso/lib/shopping-cart';
 
 const cart = {
 	products: [],

@@ -29,7 +29,7 @@ import { JETPACK_PRODUCTS_LIST } from 'calypso/lib/products-values/constants';
 import { JETPACK_RESET_PLANS } from 'calypso/lib/plans/constants';
 import { persistSignupDestination, retrieveSignupDestination } from 'calypso/signup/storageUtils';
 import { abtest } from 'calypso/lib/abtest';
-import type { ResponseCart } from 'calypso/my-sites/checkout/composite-checkout/hooks/use-shopping-cart-manager/types';
+import type { ResponseCart } from 'calypso/lib/shopping-cart';
 
 type SaveUrlToCookie = ( url: string ) => void;
 type GetUrlFromCookie = () => string | undefined;
