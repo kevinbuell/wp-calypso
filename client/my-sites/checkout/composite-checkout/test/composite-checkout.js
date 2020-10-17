@@ -16,15 +16,16 @@ import { render, act, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import CompositeCheckout from '../composite-checkout';
-import { StripeHookProvider } from 'lib/stripe';
+import { StripeHookProvider } from 'calypso/lib/stripe';
+import ShoppingCartProvider from '../hooks/use-shopping-cart-manager/shopping-cart-provider';
 
 /**
  * Mocked dependencies
  */
 jest.mock( 'state/sites/selectors' );
-import { isJetpackSite } from 'state/sites/selectors';
+import { isJetpackSite } from 'calypso/state/sites/selectors';
 jest.mock( 'state/selectors/is-site-automated-transfer' );
-import isAtomicSite from 'state/selectors/is-site-automated-transfer';
+import isAtomicSite from 'calypso/state/selectors/is-site-automated-transfer';
 
 jest.mock( 'page', () => ( {
 	redirect: jest.fn(),
@@ -235,18 +236,22 @@ describe( 'CompositeCheckout', () => {
 
 		MyCheckout = ( { cartChanges, additionalProps } ) => (
 			<ReduxProvider store={ store }>
-				<StripeHookProvider fetchStripeConfiguration={ fetchStripeConfiguration }>
-					<CompositeCheckout
-						siteSlug={ 'foo.com' }
-						setCart={ mockSetCartEndpoint }
-						getCart={ mockGetCartEndpointWith( { ...initialCart, ...( cartChanges ?? {} ) } ) }
-						getStoredCards={ async () => [] }
-						allowedPaymentMethods={ [ 'paypal' ] }
-						onlyLoadPaymentMethods={ [ 'paypal', 'full-credits', 'free-purchase' ] }
-						overrideCountryList={ countryList }
-						{ ...additionalProps }
-					/>
-				</StripeHookProvider>
+				<ShoppingCartProvider
+					cartKey={ 'foo.com' }
+					setCart={ mockSetCartEndpoint }
+					getCart={ mockGetCartEndpointWith( { ...initialCart, ...( cartChanges ?? {} ) } ) }
+				>
+					<StripeHookProvider fetchStripeConfiguration={ fetchStripeConfiguration }>
+						<CompositeCheckout
+							siteSlug={ 'foo.com' }
+							getStoredCards={ async () => [] }
+							allowedPaymentMethods={ [ 'paypal' ] }
+							onlyLoadPaymentMethods={ [ 'paypal', 'full-credits', 'free-purchase' ] }
+							overrideCountryList={ countryList }
+							{ ...additionalProps }
+						/>
+					</StripeHookProvider>
+				</ShoppingCartProvider>
 			</ReduxProvider>
 		);
 	} );
