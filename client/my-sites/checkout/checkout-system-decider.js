@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import debugFactory from 'debug';
 import { CheckoutErrorBoundary } from '@automattic/composite-checkout';
@@ -21,6 +21,7 @@ import { logToLogstash } from 'calypso/state/logstash/actions';
 import Recaptcha from 'calypso/signup/recaptcha';
 import ShoppingCartProvider from './composite-checkout/hooks/use-shopping-cart-manager/shopping-cart-provider';
 import getCartKey from './get-cart-key';
+import CartStore from 'calypso/lib/cart/store';
 
 const debug = debugFactory( 'calypso:checkout-system-decider' );
 
@@ -89,6 +90,12 @@ export default function CheckoutSystemDecider( {
 		[ reduxDispatch ]
 	);
 
+	const initialCartStore = useMemo( () => CartStore.get(), [] );
+	const cartKey = useMemo(
+		() => getCartKey( { selectedSite, isLoggedOutCart, isNoSiteCart, initialCartStore } ),
+		[ initialCartStore, selectedSite, isLoggedOutCart, isNoSiteCart ]
+	);
+
 	if ( 'composite-checkout' === checkoutVariant ) {
 		let siteSlug = selectedSite?.slug;
 
@@ -107,7 +114,7 @@ export default function CheckoutSystemDecider( {
 					onError={ logCheckoutError }
 				>
 					<ShoppingCartProvider
-						cartKey={ getCartKey( { selectedSite, isLoggedOutCart, isNoSiteCart } ) }
+						cartKey={ cartKey }
 						getCart={ wpcomGetCart }
 						setCart={ wpcomSetCart }
 					>
