@@ -90,6 +90,7 @@ export default function CheckoutSystemDecider( {
 		[ reduxDispatch ]
 	);
 
+	// Only load the cart store once; we only need it when checkout starts
 	const initialCartStore = useMemo( () => CartStore.get(), [] );
 	const cartKey = useMemo(
 		() => getCartKey( { selectedSite, isLoggedOutCart, isNoSiteCart, initialCartStore } ),
@@ -115,7 +116,11 @@ export default function CheckoutSystemDecider( {
 				>
 					<ShoppingCartProvider
 						cartKey={ cartKey }
-						getCart={ wpcomGetCart }
+						getCart={
+							isLoggedOutCart || isNoSiteCart
+								? () => Promise.resolve( initialCartStore )
+								: wpcomGetCart
+						}
 						setCart={ wpcomSetCart }
 					>
 						<StripeHookProvider fetchStripeConfiguration={ fetchStripeConfigurationWpcom }>
