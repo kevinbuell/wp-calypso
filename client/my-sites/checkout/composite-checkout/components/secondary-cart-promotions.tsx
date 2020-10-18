@@ -4,6 +4,7 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import styled from '@emotion/styled';
+import { ResponseCart } from '@automattic/shopping-cart';
 
 /**
  * Internal dependencies
@@ -12,7 +13,6 @@ import config from 'calypso/config';
 import CartFreeUserPlanUpsell from 'calypso/my-sites/checkout/cart/cart-free-user-plan-upsell';
 import UpcomingRenewalsReminder from 'calypso/my-sites/checkout/cart/upcoming-renewals-reminder';
 import { getSelectedSiteId } from 'calypso/state/ui/selectors';
-import { ResponseCart } from 'calypso/lib/shopping-cart';
 
 type PartialCart = Pick< ResponseCart, 'products' >;
 interface Props {

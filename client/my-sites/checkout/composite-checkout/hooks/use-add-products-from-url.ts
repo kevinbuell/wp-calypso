@@ -3,12 +3,11 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import debugFactory from 'debug';
+import type { RequestCartProduct } from '@automattic/shopping-cart';
 
 /**
  * Internal dependencies
  */
-import type { RequestCartProduct } from 'calypso/lib/shopping-cart';
-
 const debug = debugFactory( 'calypso:composite-checkout:use-add-products-from-url' );
 
 export type isPendingAddingProductsFromUrl = boolean;

@@ -1,11 +1,13 @@
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
 	ResponseCart,
 	ResponseCartProduct,
 	ResponseCartProductExtra,
-} from 'calypso/lib/shopping-cart';
+} from '@automattic/shopping-cart';
+
+// These types are deprecated. Please use types from @automattic/shopping-cart directly.
 
 export type CartItemValue = ResponseCartProduct;
 

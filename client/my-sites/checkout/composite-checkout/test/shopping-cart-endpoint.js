@@ -1,5 +1,5 @@
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
 	removeItemFromResponseCart,
@@ -9,7 +9,7 @@ import {
 	addItemsToResponseCart,
 	addLocationToResponseCart,
 	doesCartLocationDifferFromResponseCartLocation,
-} from 'calypso/lib/shopping-cart';
+} from '@automattic/shopping-cart';
 
 const cart = {
 	products: [],

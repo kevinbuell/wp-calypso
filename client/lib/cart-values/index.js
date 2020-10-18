@@ -51,8 +51,8 @@ const PAYMENT_METHODS = {
 /**
  * Preprocesses cart for server.
  *
- * @param {import('calypso/lib/shopping-cart').ResponseCart} cart Cart object.
- * @returns {import('calypso/lib/shopping-cart').RequestCart} A new cart object.
+ * @param {import('@automattic/shopping-cart').ResponseCart} cart Cart object.
+ * @returns {import('@automattic/shopping-cart').RequestCart} A new cart object.
  */
 export function preprocessCartForServer( {
 	coupon,
@@ -221,9 +221,9 @@ export function canRemoveFromCart( cart, cartItem ) {
  * own timestamp) as well as the ResponseCart object returned by the
  * shopping-cart endpoint directly.
  *
- * @param {import('calypso/lib/shopping-cart').ResponseCart|null} previousCartValue - the previously loaded cart
- * @param {import('calypso/lib/shopping-cart').ResponseCart} nextCartValue - the new cart value
- * @returns {import('calypso/lib/shopping-cart').ResponseCartMessages} nextCartMessages - messages about the state of the cart
+ * @param {import('@automattic/shopping-cart').ResponseCart|null} previousCartValue - the previously loaded cart
+ * @param {import('@automattic/shopping-cart').ResponseCart} nextCartValue - the new cart value
+ * @returns {import('@automattic/shopping-cart').ResponseCartMessages} nextCartMessages - messages about the state of the cart
  */
 export function getNewMessages( previousCartValue, nextCartValue ) {
 	const nextCartMessages = nextCartValue.messages || [];

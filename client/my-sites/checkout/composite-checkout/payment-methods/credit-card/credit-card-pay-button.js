@@ -13,12 +13,12 @@ import {
 	useFormStatus,
 	useSelect,
 } from '@automattic/composite-checkout';
+import { useShoppingCart } from '@automattic/shopping-cart';
 
 /**
  * Internal dependencies
  */
 import { validatePaymentDetails } from 'calypso/lib/checkout/validation';
-import { useShoppingCart } from 'calypso/lib/shopping-cart';
 import { paymentMethodClassName } from 'calypso/lib/cart-values';
 
 const debug = debugFactory( 'calypso:composite-checkout:credit-card' );

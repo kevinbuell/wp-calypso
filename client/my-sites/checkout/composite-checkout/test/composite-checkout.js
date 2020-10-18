@@ -11,13 +11,13 @@ import thunk from 'redux-thunk';
 import { Provider as ReduxProvider } from 'react-redux';
 import '@testing-library/jest-dom/extend-expect';
 import { render, act, fireEvent } from '@testing-library/react';
+import { ShoppingCartProvider } from '@automattic/shopping-cart';
 
 /**
  * Internal dependencies
  */
 import CompositeCheckout from '../composite-checkout';
 import { StripeHookProvider } from 'calypso/lib/stripe';
-import { ShoppingCartProvider } from 'calypso/lib/shopping-cart';
 
 /**
  * Mocked dependencies

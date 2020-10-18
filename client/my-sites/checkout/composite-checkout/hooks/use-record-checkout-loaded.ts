@@ -3,11 +3,11 @@
  */
 import { useRef } from 'react';
 import debugFactory from 'debug';
+import type { ReactStandardAction, ResponseCart } from '@automattic/shopping-cart';
 
 /**
  * Internal dependencies
  */
-import type { ReactStandardAction, ResponseCart } from 'calypso/lib/shopping-cart';
 import type { StoredCard } from '../types/stored-cards';
 import type { CartValue } from 'calypso/lib/cart-values/types';
 import { hasRenewalItem } from 'calypso/lib/cart-values/cart-items';
